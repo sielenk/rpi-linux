@@ -88,77 +88,76 @@
 #define RTS_TXB2		0x04
 #define INSTRUCTION_RTS(n)	(0x80 | ((n) & 0x07))
 
-
 /* MPC251x registers */
 #define CANSTAT	      0x0e
 #define CANCTRL	      0x0f
-#  define CANCTRL_REQOP_MASK	    0xe0
-#  define CANCTRL_REQOP_CONF	    0x80
-#  define CANCTRL_REQOP_LISTEN_ONLY 0x60
-#  define CANCTRL_REQOP_LOOPBACK    0x40
-#  define CANCTRL_REQOP_SLEEP	    0x20
-#  define CANCTRL_REQOP_NORMAL	    0x00
-#  define CANCTRL_OSM		    0x08
-#  define CANCTRL_ABAT		    0x10
+#define CANCTRL_REQOP_MASK	    0xe0
+#define CANCTRL_REQOP_CONF	    0x80
+#define CANCTRL_REQOP_LISTEN_ONLY 0x60
+#define CANCTRL_REQOP_LOOPBACK    0x40
+#define CANCTRL_REQOP_SLEEP	    0x20
+#define CANCTRL_REQOP_NORMAL	    0x00
+#define CANCTRL_OSM		    0x08
+#define CANCTRL_ABAT		    0x10
 #define TEC	      0x1c
 #define REC	      0x1d
 #define CNF1	      0x2a
-#  define CNF1_SJW_SHIFT   6
+#define CNF1_SJW_SHIFT   6
 #define CNF2	      0x29
-#  define CNF2_BTLMODE	   0x80
-#  define CNF2_SAM         0x40
-#  define CNF2_PS1_SHIFT   3
+#define CNF2_BTLMODE	   0x80
+#define CNF2_SAM         0x40
+#define CNF2_PS1_SHIFT   3
 #define CNF3	      0x28
-#  define CNF3_SOF	   0x08
-#  define CNF3_WAKFIL	   0x04
-#  define CNF3_PHSEG2_MASK 0x07
+#define CNF3_SOF	   0x08
+#define CNF3_WAKFIL	   0x04
+#define CNF3_PHSEG2_MASK 0x07
 #define CANINTE	      0x2b
-#  define CANINTE_MERRE 0x80
-#  define CANINTE_WAKIE 0x40
-#  define CANINTE_ERRIE 0x20
-#  define CANINTE_TX2IE 0x10
-#  define CANINTE_TX1IE 0x08
-#  define CANINTE_TX0IE 0x04
-#  define CANINTE_RX1IE 0x02
-#  define CANINTE_RX0IE 0x01
+#define CANINTE_MERRE 0x80
+#define CANINTE_WAKIE 0x40
+#define CANINTE_ERRIE 0x20
+#define CANINTE_TX2IE 0x10
+#define CANINTE_TX1IE 0x08
+#define CANINTE_TX0IE 0x04
+#define CANINTE_RX1IE 0x02
+#define CANINTE_RX0IE 0x01
 #define CANINTF	      0x2c
-#  define CANINTF_MERRF 0x80
-#  define CANINTF_WAKIF 0x40
-#  define CANINTF_ERRIF 0x20
-#  define CANINTF_TX2IF 0x10
-#  define CANINTF_TX1IF 0x08
-#  define CANINTF_TX0IF 0x04
-#  define CANINTF_RX1IF 0x02
-#  define CANINTF_RX0IF 0x01
-#  define CANINTF_RX (CANINTF_RX0IF | CANINTF_RX1IF)
-#  define CANINTF_TX (CANINTF_TX2IF | CANINTF_TX1IF | CANINTF_TX0IF)
-#  define CANINTF_ERR (CANINTF_ERRIF)
+#define CANINTF_MERRF 0x80
+#define CANINTF_WAKIF 0x40
+#define CANINTF_ERRIF 0x20
+#define CANINTF_TX2IF 0x10
+#define CANINTF_TX1IF 0x08
+#define CANINTF_TX0IF 0x04
+#define CANINTF_RX1IF 0x02
+#define CANINTF_RX0IF 0x01
+#define CANINTF_RX (CANINTF_RX0IF | CANINTF_RX1IF)
+#define CANINTF_TX (CANINTF_TX2IF | CANINTF_TX1IF | CANINTF_TX0IF)
+#define CANINTF_ERR (CANINTF_ERRIF)
 #define EFLG	      0x2d
-#  define EFLG_EWARN	0x01
-#  define EFLG_RXWAR	0x02
-#  define EFLG_TXWAR	0x04
-#  define EFLG_RXEP	0x08
-#  define EFLG_TXEP	0x10
-#  define EFLG_TXBO	0x20
-#  define EFLG_RX0OVR	0x40
-#  define EFLG_RX1OVR	0x80
+#define EFLG_EWARN	0x01
+#define EFLG_RXWAR	0x02
+#define EFLG_TXWAR	0x04
+#define EFLG_RXEP	0x08
+#define EFLG_TXEP	0x10
+#define EFLG_TXBO	0x20
+#define EFLG_RX0OVR	0x40
+#define EFLG_RX1OVR	0x80
 #define TXBCTRL(n)  (((n) * 0x10) + 0x30 + TXBCTRL_OFF)
-#  define TXBCTRL_ABTF	0x40
-#  define TXBCTRL_MLOA	0x20
-#  define TXBCTRL_TXERR 0x10
-#  define TXBCTRL_TXREQ 0x08
+#define TXBCTRL_ABTF	0x40
+#define TXBCTRL_MLOA	0x20
+#define TXBCTRL_TXERR 0x10
+#define TXBCTRL_TXREQ 0x08
 #define TXBSIDH(n)  (((n) * 0x10) + 0x30 + TXBSIDH_OFF)
-#  define SIDH_SHIFT    3
+#define SIDH_SHIFT    3
 #define TXBSIDL(n)  (((n) * 0x10) + 0x30 + TXBSIDL_OFF)
-#  define SIDL_SID_MASK    7
-#  define SIDL_SID_SHIFT   5
-#  define SIDL_EXIDE_SHIFT 3
-#  define SIDL_EID_SHIFT   16
-#  define SIDL_EID_MASK    3
+#define SIDL_SID_MASK    7
+#define SIDL_SID_SHIFT   5
+#define SIDL_EXIDE_SHIFT 3
+#define SIDL_EID_SHIFT   16
+#define SIDL_EID_MASK    3
 #define TXBEID8(n)  (((n) * 0x10) + 0x30 + TXBEID8_OFF)
 #define TXBEID0(n)  (((n) * 0x10) + 0x30 + TXBEID0_OFF)
 #define TXBDLC(n)   (((n) * 0x10) + 0x30 + TXBDLC_OFF)
-#  define DLC_RTR_SHIFT    6
+#define DLC_RTR_SHIFT    6
 #define TXBCTRL_OFF 0
 #define TXBSIDH_OFF 1
 #define TXBSIDL_OFF 2
@@ -167,21 +166,21 @@
 #define TXBDLC_OFF  5
 #define TXBDAT_OFF  6
 #define RXBCTRL(n)  (((n) * 0x10) + 0x60 + RXBCTRL_OFF)
-#  define RXBCTRL_BUKT	0x04
-#  define RXBCTRL_RXM0	0x20
-#  define RXBCTRL_RXM1	0x40
+#define RXBCTRL_BUKT	0x04
+#define RXBCTRL_RXM0	0x20
+#define RXBCTRL_RXM1	0x40
 #define RXBSIDH(n)  (((n) * 0x10) + 0x60 + RXBSIDH_OFF)
-#  define RXBSIDH_SHIFT 3
+#define RXBSIDH_SHIFT 3
 #define RXBSIDL(n)  (((n) * 0x10) + 0x60 + RXBSIDL_OFF)
-#  define RXBSIDL_IDE   0x08
-#  define RXBSIDL_SRR   0x10
-#  define RXBSIDL_EID   3
-#  define RXBSIDL_SHIFT 5
+#define RXBSIDL_IDE   0x08
+#define RXBSIDL_SRR   0x10
+#define RXBSIDL_EID   3
+#define RXBSIDL_SHIFT 5
 #define RXBEID8(n)  (((n) * 0x10) + 0x60 + RXBEID8_OFF)
 #define RXBEID0(n)  (((n) * 0x10) + 0x60 + RXBEID0_OFF)
 #define RXBDLC(n)   (((n) * 0x10) + 0x60 + RXBDLC_OFF)
-#  define RXBDLC_LEN_MASK  0x0f
-#  define RXBDLC_RTR       0x40
+#define RXBDLC_LEN_MASK  0x0f
+#define RXBDLC_RTR       0x40
 #define RXBCTRL_OFF 0
 #define RXBSIDH_OFF 1
 #define RXBSIDL_OFF 2
@@ -215,7 +214,7 @@
 
 #define DEVICE_NAME "mcp251x"
 
-static int mcp251x_enable_dma; /* Enable SPI DMA. Default: 0 (Off) */
+static int mcp251x_enable_dma;	/* Enable SPI DMA. Default: 0 (Off) */
 module_param(mcp251x_enable_dma, int, S_IRUGO);
 MODULE_PARM_DESC(mcp251x_enable_dma, "Enable SPI DMA. Default: 0 (Off)");
 
@@ -232,17 +231,17 @@ static const struct can_bittiming_const mcp251x_bittiming_const = {
 };
 
 enum mcp251x_model {
-	CAN_MCP251X_MCP2510	= 0x2510,
-	CAN_MCP251X_MCP2515	= 0x2515,
+	CAN_MCP251X_MCP2510 = 0x2510,
+	CAN_MCP251X_MCP2515 = 0x2515,
 };
 
 struct mcp251x_priv {
-	struct can_priv	   can;
+	struct can_priv can;
 	struct net_device *net;
 	struct spi_device *spi;
 	enum mcp251x_model model;
 
-	struct mutex mcp_lock; /* SPI device lock */
+	struct mutex mcp_lock;	/* SPI device lock */
 
 	u8 *spi_tx_buf;
 	u8 *spi_rx_buf;
@@ -345,7 +344,7 @@ static u8 mcp251x_read_reg(struct spi_device *spi, uint8_t reg)
 }
 
 static void mcp251x_read_2regs(struct spi_device *spi, uint8_t reg,
-		uint8_t *v1, uint8_t *v2)
+			       uint8_t * v1, uint8_t * v2)
 {
 	struct mcp251x_priv *priv = dev_get_drvdata(&spi->dev);
 
@@ -382,7 +381,7 @@ static void mcp251x_write_bits(struct spi_device *spi, u8 reg,
 	mcp251x_spi_trans(spi, 4);
 }
 
-static void mcp251x_hw_tx_frame(struct spi_device *spi, u8 *buf,
+static void mcp251x_hw_tx_frame(struct spi_device *spi, u8 * buf,
 				int len, int tx_buf_idx)
 {
 	struct mcp251x_priv *priv = dev_get_drvdata(&spi->dev);
@@ -391,8 +390,7 @@ static void mcp251x_hw_tx_frame(struct spi_device *spi, u8 *buf,
 		int i;
 
 		for (i = 1; i < TXBDAT_OFF + len; i++)
-			mcp251x_write_reg(spi, TXBCTRL(tx_buf_idx) + i,
-					  buf[i]);
+			mcp251x_write_reg(spi, TXBCTRL(tx_buf_idx) + i, buf[i]);
 	} else {
 		memcpy(priv->spi_tx_buf, buf, TXBDAT_OFF + len);
 		mcp251x_spi_trans(spi, TXBDAT_OFF + len);
@@ -406,19 +404,19 @@ static void mcp251x_hw_tx(struct spi_device *spi, struct can_frame *frame,
 	u32 sid, eid, exide, rtr;
 	u8 buf[SPI_TRANSFER_BUF_LEN];
 
-	exide = (frame->can_id & CAN_EFF_FLAG) ? 1 : 0; /* Extended ID Enable */
+	exide = (frame->can_id & CAN_EFF_FLAG) ? 1 : 0;	/* Extended ID Enable */
 	if (exide)
 		sid = (frame->can_id & CAN_EFF_MASK) >> 18;
 	else
-		sid = frame->can_id & CAN_SFF_MASK; /* Standard ID */
-	eid = frame->can_id & CAN_EFF_MASK; /* Extended ID */
-	rtr = (frame->can_id & CAN_RTR_FLAG) ? 1 : 0; /* Remote transmission */
+		sid = frame->can_id & CAN_SFF_MASK;	/* Standard ID */
+	eid = frame->can_id & CAN_EFF_MASK;	/* Extended ID */
+	rtr = (frame->can_id & CAN_RTR_FLAG) ? 1 : 0;	/* Remote transmission */
 
 	buf[TXBCTRL_OFF] = INSTRUCTION_LOAD_TXB(tx_buf_idx);
 	buf[TXBSIDH_OFF] = sid >> SIDH_SHIFT;
 	buf[TXBSIDL_OFF] = ((sid & SIDL_SID_MASK) << SIDL_SID_SHIFT) |
-		(exide << SIDL_EXIDE_SHIFT) |
-		((eid >> SIDL_EID_SHIFT) & SIDL_EID_MASK);
+	    (exide << SIDL_EXIDE_SHIFT) |
+	    ((eid >> SIDL_EID_SHIFT) & SIDL_EID_MASK);
 	buf[TXBEID8_OFF] = GET_BYTE(eid, 1);
 	buf[TXBEID0_OFF] = GET_BYTE(eid, 0);
 	buf[TXBDLC_OFF] = (rtr << DLC_RTR_SHIFT) | frame->can_dlc;
@@ -430,8 +428,7 @@ static void mcp251x_hw_tx(struct spi_device *spi, struct can_frame *frame,
 	mcp251x_spi_trans(priv->spi, 1);
 }
 
-static void mcp251x_hw_rx_frame(struct spi_device *spi, u8 *buf,
-				int buf_idx)
+static void mcp251x_hw_rx_frame(struct spi_device *spi, u8 * buf, int buf_idx)
 {
 	struct mcp251x_priv *priv = dev_get_drvdata(&spi->dev);
 
@@ -470,21 +467,21 @@ static void mcp251x_hw_rx(struct spi_device *spi, int buf_idx)
 		/* Extended ID format */
 		frame->can_id = CAN_EFF_FLAG;
 		frame->can_id |=
-			/* Extended ID part */
-			SET_BYTE(buf[RXBSIDL_OFF] & RXBSIDL_EID, 2) |
-			SET_BYTE(buf[RXBEID8_OFF], 1) |
-			SET_BYTE(buf[RXBEID0_OFF], 0) |
-			/* Standard ID part */
-			(((buf[RXBSIDH_OFF] << RXBSIDH_SHIFT) |
-			  (buf[RXBSIDL_OFF] >> RXBSIDL_SHIFT)) << 18);
+		    /* Extended ID part */
+		    SET_BYTE(buf[RXBSIDL_OFF] & RXBSIDL_EID, 2) |
+		    SET_BYTE(buf[RXBEID8_OFF], 1) |
+		    SET_BYTE(buf[RXBEID0_OFF], 0) |
+		    /* Standard ID part */
+		    (((buf[RXBSIDH_OFF] << RXBSIDH_SHIFT) |
+		      (buf[RXBSIDL_OFF] >> RXBSIDL_SHIFT)) << 18);
 		/* Remote transmission request */
 		if (buf[RXBDLC_OFF] & RXBDLC_RTR)
 			frame->can_id |= CAN_RTR_FLAG;
 	} else {
 		/* Standard ID format */
 		frame->can_id =
-			(buf[RXBSIDH_OFF] << RXBSIDH_SHIFT) |
-			(buf[RXBSIDL_OFF] >> RXBSIDL_SHIFT);
+		    (buf[RXBSIDH_OFF] << RXBSIDH_SHIFT) |
+		    (buf[RXBSIDL_OFF] >> RXBSIDL_SHIFT);
 		if (buf[RXBSIDL_OFF] & RXBSIDL_SRR)
 			frame->can_id |= CAN_RTR_FLAG;
 	}
@@ -592,12 +589,10 @@ static int mcp251x_do_set_bittiming(struct net_device *net)
 			   CNF2_SAM : 0) |
 			  ((bt->phase_seg1 - 1) << CNF2_PS1_SHIFT) |
 			  (bt->prop_seg - 1));
-	mcp251x_write_bits(spi, CNF3, CNF3_PHSEG2_MASK,
-			   (bt->phase_seg2 - 1));
+	mcp251x_write_bits(spi, CNF3, CNF3_PHSEG2_MASK, (bt->phase_seg2 - 1));
 	dev_info(&spi->dev, "CNF: 0x%02x 0x%02x 0x%02x\n",
 		 mcp251x_read_reg(spi, CNF1),
-		 mcp251x_read_reg(spi, CNF2),
-		 mcp251x_read_reg(spi, CNF3));
+		 mcp251x_read_reg(spi, CNF2), mcp251x_read_reg(spi, CNF3));
 
 	return 0;
 }
@@ -609,8 +604,7 @@ static int mcp251x_setup(struct net_device *net, struct mcp251x_priv *priv,
 
 	mcp251x_write_reg(spi, RXBCTRL(0),
 			  RXBCTRL_BUKT | RXBCTRL_RXM0 | RXBCTRL_RXM1);
-	mcp251x_write_reg(spi, RXBCTRL(1),
-			  RXBCTRL_RXM0 | RXBCTRL_RXM1);
+	mcp251x_write_reg(spi, RXBCTRL(1), RXBCTRL_RXM0 | RXBCTRL_RXM1);
 	return 0;
 }
 
@@ -813,7 +807,8 @@ static irqreturn_t mcp251x_can_ist(int irq, void *dev_id)
 			 * (The MCP2515 does this automatically.)
 			 */
 			if (mcp251x_is_2510(spi))
-				mcp251x_write_bits(spi, CANINTF, CANINTF_RX0IF, 0x00);
+				mcp251x_write_bits(spi, CANINTF, CANINTF_RX0IF,
+						   0x00);
 		}
 
 		/* receive buffer 1 */
@@ -939,8 +934,9 @@ static int mcp251x_open(struct net_device *net)
 	priv->tx_len = 0;
 
 	ret = request_threaded_irq(spi->irq, NULL, mcp251x_can_ist,
-		  pdata->irq_flags ? pdata->irq_flags : IRQF_TRIGGER_FALLING,
-		  DEVICE_NAME, priv);
+				   pdata->irq_flags ? pdata->
+				   irq_flags : IRQF_TRIGGER_FALLING,
+				   DEVICE_NAME, priv);
 	if (ret) {
 		dev_err(&spi->dev, "failed to acquire irq %d\n", spi->irq);
 		if (pdata->transceiver_enable)
@@ -1007,7 +1003,7 @@ static int __devinit mcp251x_can_probe(struct spi_device *spi)
 	priv->can.do_set_mode = mcp251x_do_set_mode;
 	priv->can.clock.freq = pdata->oscillator_frequency / 2;
 	priv->can.ctrlmode_supported = CAN_CTRLMODE_3_SAMPLES |
-		CAN_CTRLMODE_LOOPBACK | CAN_CTRLMODE_LISTENONLY;
+	    CAN_CTRLMODE_LOOPBACK | CAN_CTRLMODE_LISTENONLY;
 	priv->model = spi_get_device_id(spi)->driver_data;
 	priv->net = net;
 	dev_set_drvdata(&spi->dev, priv);
@@ -1030,8 +1026,8 @@ static int __devinit mcp251x_can_probe(struct spi_device *spi)
 
 		if (priv->spi_tx_buf) {
 			priv->spi_rx_buf = (priv->spi_tx_buf + (PAGE_SIZE / 2));
-			priv->spi_rx_dma = (dma_addr_t)(priv->spi_tx_dma +
-							(PAGE_SIZE / 2));
+			priv->spi_rx_dma = (dma_addr_t) (priv->spi_tx_dma +
+							 (PAGE_SIZE / 2));
 		} else {
 			/* Fall back to non-DMA */
 			mcp251x_enable_dma = 0;
@@ -1182,19 +1178,19 @@ static int mcp251x_can_resume(struct spi_device *spi)
 #endif
 
 static const struct spi_device_id mcp251x_id_table[] = {
-	{ "mcp2510",	CAN_MCP251X_MCP2510 },
-	{ "mcp2515",	CAN_MCP251X_MCP2515 },
-	{ },
+	{"mcp2510", CAN_MCP251X_MCP2510},
+	{"mcp2515", CAN_MCP251X_MCP2515},
+	{},
 };
 
 MODULE_DEVICE_TABLE(spi, mcp251x_id_table);
 
 static struct spi_driver mcp251x_can_driver = {
 	.driver = {
-		.name = DEVICE_NAME,
-		.bus = &spi_bus_type,
-		.owner = THIS_MODULE,
-	},
+		   .name = DEVICE_NAME,
+		   .bus = &spi_bus_type,
+		   .owner = THIS_MODULE,
+		   },
 
 	.id_table = mcp251x_id_table,
 	.probe = mcp251x_can_probe,
