@@ -74,6 +74,7 @@
 #include <linux/platform_device.h>
 #include <linux/slab.h>
 #include <linux/spi/spi.h>
+#include <linux/gpio.h>
 #include <linux/uaccess.h>
 
 /* SPI interface instruction set */
@@ -213,6 +214,9 @@
 #define TX_ECHO_SKB_MAX	1
 
 #define DEVICE_NAME "mcp251x"
+
+#define SPI_CHIP_SELECT 0
+#define GPIO_IRQ        4
 
 static int mcp251x_enable_dma;	/* Enable SPI DMA. Default: 0 (Off) */
 module_param(mcp251x_enable_dma, int, S_IRUGO);
@@ -1177,6 +1181,24 @@ static int mcp251x_can_resume(struct spi_device *spi)
 #define mcp251x_can_resume NULL
 #endif
 
+static struct mcp251x_platform_data mcp251x_info = {
+	.oscillator_frequency = 16000000,
+	.board_specific_setup = NULL,
+	.irq_flags = IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+	.power_enable = NULL,
+	.transceiver_enable = NULL,
+};
+
+static struct spi_board_info mcp251x_spi_device = {
+	.modalias = "mcp2515",
+	.max_speed_hz = 10000000,
+	.platform_data = &mcp251x_info,
+	/* .irq = unknown , defined later thru bcm2708_mcp251x_init */
+	.bus_num = 0,
+	.chip_select = SPI_CHIP_SELECT,
+	.mode = SPI_MODE_0,
+};
+
 static const struct spi_device_id mcp251x_id_table[] = {
 	{"mcp2510", CAN_MCP251X_MCP2510},
 	{"mcp2515", CAN_MCP251X_MCP2515},
@@ -1199,14 +1221,86 @@ static struct spi_driver mcp251x_can_driver = {
 	.resume = mcp251x_can_resume,
 };
 
+static struct spi_device *global_sdev = NULL;
+static int global_irq_gpio = -1;
+
 static int __init mcp251x_can_init(void)
 {
-	return spi_register_driver(&mcp251x_can_driver);
+	struct spi_device *sdev;
+	int irq_gpio = GPIO_IRQ;
+	int ret;
+
+	{
+		struct spi_master *master = spi_busnum_to_master(mcp251x_spi_device.bus_num);
+
+		if (!master) {
+			printk(KERN_ERR "invalid spi bus number %d\n",
+			       mcp251x_spi_device.bus_num);
+			return -EINVAL;
+		}
+
+		sdev = spi_new_device(master, &mcp251x_spi_device);
+
+		put_device(&master->dev);
+	}
+
+	if (!sdev) {
+		printk(KERN_ERR "failed to allocate spi device\n");
+		return -EINVAL;
+	} else
+		dev_info(&sdev->dev, "successfully allocated\n");
+
+	ret = gpio_request_one(irq_gpio, GPIOF_DIR_IN, DEVICE_NAME " irq");
+	if (ret) {
+		dev_err(&sdev->dev, "failed to request gpio %d\n", irq_gpio);
+		goto exit_device;
+	}
+
+	sdev->irq = gpio_to_irq(irq_gpio);
+
+	dev_info(&sdev->dev, "successfully requested gpio %d as irq %d\n",
+		 irq_gpio, sdev->irq);
+
+	ret = spi_register_driver(&mcp251x_can_driver);
+	if (ret) {
+		dev_err(&sdev->dev, "failed to register driver\n");
+		goto exit_gpio;
+	}
+
+	global_sdev = sdev;
+	global_irq_gpio = irq_gpio;
+
+	dev_info(&sdev->dev, "successfully registered driver\n");
+
+	return 0;
+
+exit_gpio:
+	gpio_free(irq_gpio);
+
+exit_device:
+	spi_unregister_device(sdev);
+
+	return ret;
 }
 
 static void __exit mcp251x_can_exit(void)
 {
-	spi_unregister_driver(&mcp251x_can_driver);
+	struct spi_device *sdev = global_sdev;
+	int irq_gpio = global_irq_gpio;
+
+	global_sdev = NULL;
+	global_irq_gpio = -1;
+
+	if (sdev) {
+		dev_info(&sdev->dev, "unregistering driver\n");
+		spi_unregister_driver(&mcp251x_can_driver);
+
+		dev_info(&sdev->dev, "freeing gpio %d\n", irq_gpio);
+		gpio_free(irq_gpio);
+
+		dev_info(&sdev->dev, "unregistering device\n");
+		spi_unregister_device(sdev);
+	}
 }
 
 module_init(mcp251x_can_init);
